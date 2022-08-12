@@ -1,4 +1,7 @@
 package items;
 
-public class BaseItem {
+import stats.AdditionalStat;
+
+public class BaseItem{
+
 }
