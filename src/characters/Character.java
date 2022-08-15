@@ -1,12 +1,17 @@
 package characters;
 
+import stats.PrimaryStat;
+
 public abstract class Character implements LevelUp {
     private String name;
     private int level;
+    PrimaryStat primaryStat;
+
 
     public Character(String name) {
         this.name = name;
         this.level = 1;
+
     }
 
     @Override

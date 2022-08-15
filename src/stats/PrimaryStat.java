@@ -1,8 +1,11 @@
 package stats;
 
-import characters.Character;
+
+public class PrimaryStat {
+    private int dexterity;
+    private int strength;
+    private int intelligence;
 
 
-public class PrimaryStat{
 
 }
