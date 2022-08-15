@@ -16,5 +16,7 @@ public class RPGCharacterApplication {
         Cloth robe = new Cloth("Fiery vest", 2,"Chest");
         System.out.println(robe);
 
+        System.out.println(jani.getTotalStats());
+
     }
 }
