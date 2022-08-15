@@ -3,66 +3,53 @@ package classes;
 import characters.Character;
 
 public class Mage extends Character{
-    private final int baseDexterity = 1;  //base dexterity
-    private final int baseStrength = 1;  //base strength
-    private final int baseIntelligence = 8;  //base intelligence
-    private int lvlDexterity = 0;  //total dexterity gained on level ups
-    private int lvlStrength = 0;  //total strength gained on level ups
-    private int lvlIntelligence = 0;  //total intelligence gained on level ups
-    private final String armour = "Cloth"; //what kind of armour can be used
+    private final String armor = "Cloth"; //what kind of armor can be used
 
     public Mage(String name) {
         super(name);
     }
-
-    //Called on level up to add level and level-up-attributes to existing amounts
     @Override
-    public void plusOneLevel() {
-        this.lvlDexterity ++;
-        this.lvlStrength ++;
-        this.lvlIntelligence += 5;
-        super.plusOneLevel();
-    }
-
     public int getBaseDexterity() {
-        return baseDexterity;
+        return 1;
     }
-
+    @Override
     public int getBaseStrength() {
-        return baseStrength;
+        return 1;
     }
-
+    @Override
     public int getBaseIntelligence() {
-        return baseIntelligence;
+        return 8;
     }
-
+    //Check character lvl and multiply with level up stats to get total--------
+    //stats from level ups for current lvl
+    @Override
     public int getLvlDexterity() {
-        return lvlDexterity;
+        return getLevel();
     }
-
+    @Override
     public int getLvlStrength() {
-        return lvlStrength;
+        return getLevel();
     }
-
+    @Override
     public int getLvlIntelligence() {
-        return lvlIntelligence;
+        return getLevel()*5;
     }
-
+    //--------------------------------------------------------------------------
     public String getArmour() {
-        return armour;
+        return armor;
     }
-
     @Override
     public String toString() {
         return "Mage{" +
-                "level=" + getLevel()+
-                ", baseDexterity=" + baseDexterity +
-                ", baseStrength=" + baseStrength +
-                ", baseIntelligence=" + baseIntelligence +
-                ", lvlDexterity=" + lvlDexterity +
-                ", lvlStrength=" + lvlStrength +
-                ", lvlIntelligence=" + lvlIntelligence +
-                ", armour='" + armour + '\'' +
+                "name=" + getName()+
+                ", level=" + getLevel()+
+                ", baseDexterity=" + getBaseDexterity() +
+                ", baseStrength=" + getBaseStrength() +
+                ", baseIntelligence=" + getBaseIntelligence() +
+                ", lvlDexterity=" + getLvlDexterity() +
+                ", lvlStrength=" + getLvlStrength() +
+                ", lvlIntelligence=" + getLvlIntelligence() +
+                ", armour='" + armor + '\'' +
                 '}';
     }
 }
