@@ -1,6 +1,9 @@
+import characters.Character;
 import classes.Mage;
-import items.armor.Cloth;
-import items.weapon.Staff;
+import exceptions.InvalidArmorException;
+import exceptions.InvalidWeaponException;
+import items.armor.Armor;
+import items.weapon.Weapon;
 
 public class RPGCharacterApplication {
     public static void main(String[] args) {
@@ -10,13 +13,29 @@ public class RPGCharacterApplication {
         jani.plusOneLevel();
         System.out.println(jani);
 
-        Staff stick = new Staff("Atiesh",4,"Weapon",50,2.2);
-        System.out.println(stick);
+        //Create armor and weapon
+        Weapon stick = new Weapon("Atiesh",3,"Weapon",50,2.2,"Staff");
+        Armor robe = new Armor("Fiery vest", 2,"Chest", "Mail",1,1,1);
+        Armor trousers = new Armor("Levis",3,"Legs", "Cloth",2,2,2);
 
-        Cloth robe = new Cloth("Fiery vest", 2,"Chest");
-        System.out.println(robe);
+        System.out.println("GET TOTAL STATS: "+jani.getTotalStats());
 
-        System.out.println(jani.getTotalStats());
+        try {
+            jani.equipArmor(String.valueOf(trousers.getSlot()),trousers);
+            jani.equipArmor(String.valueOf(robe.getSlot()),robe);
+        }catch (InvalidArmorException e){
+            System.out.println(e);
+        }
+        try {
+            jani.equipWeapon(String.valueOf(stick.getSlot()),stick);;
+        }catch (InvalidWeaponException e){
+            System.out.println(e);
+        }
+        //System.out.println("USABLE WPN: "+jani.getUsableWeapon().get(0));
+        System.out.println("GET ITEMS: "+jani.getItems());
+
+        System.out.println(jani.getItems("Chest"));
+        System.out.println(jani.getItems("Weapon"));
 
     }
 }

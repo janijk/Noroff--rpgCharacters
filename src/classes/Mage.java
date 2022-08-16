@@ -1,42 +1,20 @@
 package classes;
 
 import characters.Character;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Mage extends Character{
-    private final String armor = "Cloth"; //what kind of armor can be used
 
     public Mage(String name) {
-        super(name);
-    }
-    @Override
-    public int getBaseDexterity() {
-        return 1;
-    }
-    @Override
-    public int getBaseStrength() {
-        return 1;
-    }
-    @Override
-    public int getBaseIntelligence() {
-        return 8;
-    }
-    //Check character lvl and multiply with level up stats to get total--------
-    //stats from level ups for current lvl
-    @Override
-    public int getLvlDexterity() {
-        return getLevel();
-    }
-    @Override
-    public int getLvlStrength() {
-        return getLevel();
-    }
-    @Override
-    public int getLvlIntelligence() {
-        return getLevel()*5;
-    }
-    //--------------------------------------------------------------------------
-    public String getArmour() {
-        return armor;
+        super(
+                name,
+               1,
+                new ArrayList<>(Arrays.asList("Cloth")),    //Usable armor
+                new ArrayList<>(Arrays.asList("Staff", "Wand")), //Usable weapons
+                new ArrayList<>(Arrays.asList(1,1,8)),  //Base stats (Dexterity,Strength,Intelligence)
+                new ArrayList<>(Arrays.asList(1,1,5))  //Stats increase per level (Dexterity,Strength,Intelligence)
+        );
     }
     @Override
     public String toString() {
@@ -49,7 +27,9 @@ public class Mage extends Character{
                 ", lvlDexterity=" + getLvlDexterity() +
                 ", lvlStrength=" + getLvlStrength() +
                 ", lvlIntelligence=" + getLvlIntelligence() +
-                ", armour='" + armor + '\'' +
+                ", armour='"+ getUsableArmor() +  '\'' +
+                ", weapon='"+ getUsableWeapon() +  '\'' +
+                ", equipped='" + getItems() + '\'' +
                 '}';
     }
 }
