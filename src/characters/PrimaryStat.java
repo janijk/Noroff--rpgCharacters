@@ -15,6 +15,7 @@ public interface PrimaryStat {
     public int getLvlIntelligence();
     //Get total stats (base+level*level increase)--------------
     public ArrayList<Integer> getTotalStats();
+    public double calculateDamage();
 
 
 }

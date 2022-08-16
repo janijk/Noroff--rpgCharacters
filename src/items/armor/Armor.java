@@ -11,9 +11,9 @@ public class Armor extends BaseItem {
     public Armor(String name, int lvlReq, String slot, String armorType,
                     int dexterity, int strength, int intelligence) {
         super(name, lvlReq, slot);
-        this.dexterity = dexterity;
-        this.strength = strength;
-        this.intelligence = intelligence;
+        this.dexterity = dexterity;         //Armors dexterity
+        this.strength = strength;           //Armors strength
+        this.intelligence = intelligence;   //Armors intelligence
         this.armorType = armorType;         //What type of armor is e.g., Cloth, Mail
     }
     public String getArmorType() {
