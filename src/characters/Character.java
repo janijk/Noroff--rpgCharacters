@@ -13,17 +13,19 @@ import items.weapon.Weapon;
 public abstract class Character implements PrimaryStat {
     private String name;
     private int level;
-    private static Map<String, BaseItem> items;
-    private ArrayList<String> usableArmor;
-    private ArrayList<String> usableWeapon;
-    private ArrayList<Integer> baseStats;
-    private ArrayList<Integer> levelStats;
+    private String classPrimaryStat;
+    private static Map<String, BaseItem> items;  //Items character has currently equipped
+    private ArrayList<String> usableArmor;      //Details of armor character can use
+    private ArrayList<String> usableWeapon;     //Details of weapons character can use
+    private ArrayList<Integer> baseStats;       //Characters base stats (Dexterity,Strength,Intelligence)
+    private ArrayList<Integer> levelStats;      //Characters stat increase per level (Dexterity,Strength,Intelligence)
 
-    public Character(String name, int level, ArrayList<String> usableArmor, ArrayList<String> usableWeapon,
-                     ArrayList<Integer> baseStats, ArrayList<Integer> levelStats) {
+    public Character(String name, String classPrimaryStat, ArrayList<String> usableArmor,
+                     ArrayList<String> usableWeapon, ArrayList<Integer> baseStats, ArrayList<Integer> levelStats) {
         this.items = new HashMap<>();
         this.name = name;
-        this.level = level;
+        this.level = 1;
+        this.classPrimaryStat = classPrimaryStat;
         this.usableArmor = usableArmor;
         this.usableWeapon = usableWeapon;
         this.baseStats = baseStats;
@@ -52,6 +54,9 @@ public abstract class Character implements PrimaryStat {
     public int getLevel() {
         return level;
     }
+
+    public String getClassPrimaryStat() {return classPrimaryStat;   }
+
     public static Map<String, BaseItem> getItems() {
         return items;
     }
@@ -94,7 +99,7 @@ public abstract class Character implements PrimaryStat {
         total.add(getBaseIntelligence()+getLvlIntelligence());
         return total;
     }
-    // Check if armor type and level requirements are met
+    // Check if armor type and level requirements are met when equipping a armor
     public void equipArmor(String key, Armor armr) throws InvalidArmorException {
         for (int i = 0; i < getUsableArmor().size(); i++) {
             if(!armr.getArmorType().equals(getUsableArmor().get(i)) && i<getUsableArmor().size()-1){
@@ -106,9 +111,9 @@ public abstract class Character implements PrimaryStat {
             }
         }
     }
-    // Check if level and weapon type requirements are met
+    // Check if level and weapon type requirements are met when equipping a weapon
     public void equipWeapon(String key, Weapon weapon) throws InvalidWeaponException {
-        for (int i = 0; i<getUsableWeapon().size(); i++){
+        for (int i = 0; i < getUsableWeapon().size(); i++){
             if(!weapon.getWeaponType().equals(getUsableWeapon().get(i)) && i<getUsableWeapon().size()-1){
                 throw new InvalidWeaponException("You cant use this weapon");
             } else if (weapon.getLvlReq()>getLevel()) {
@@ -117,5 +122,82 @@ public abstract class Character implements PrimaryStat {
                 setItems(key, weapon);
             }
         }
+    }
+
+    // Calculate character damage by calculating sum of primary stats,
+    // combined with armor stats and multiplied with weapon dps
+    @Override
+    public double calculateDamage() {
+        Map<String, BaseItem> itemsCurrentlyEquipped = getItems();
+        String characterPrimaryStat = getClassPrimaryStat();
+        int dexterity = getTotalStats().get(0);     // Characters total dexterity
+        int strength = getTotalStats().get(1);      // Characters total strength
+        int intelligence = getTotalStats().get(2);  // Characters total intelligence
+        double weaponDps = 1;                       // Weapon dps, if no weapon then 1
+        // Loop through armors equipped and add their stats to previously declared dexterity,strength,intelligence
+        for (String item : itemsCurrentlyEquipped.keySet()){
+            if (itemsCurrentlyEquipped.get(item).getSlot() != "Weapon"){
+                Armor armor = (Armor) itemsCurrentlyEquipped.get(item);
+                dexterity += armor.getDexterity();
+                strength += armor.getStrength();
+                intelligence += armor.getIntelligence();
+            } else if (itemsCurrentlyEquipped.get(item).getSlot() == "Weapon") {
+                Weapon weapon = (Weapon) itemsCurrentlyEquipped.get(item);
+                weaponDps = weapon.getDps();
+            }
+        }
+        // Calculate character dps from primary stat and weapon dps
+        if (characterPrimaryStat == "Dexterity"){
+            return weaponDps * (1+dexterity/100.0);
+        } else if (characterPrimaryStat == "Strength") {
+            return weaponDps * (1+strength/100.0);
+        }else {
+            return weaponDps * (1+intelligence/100.0);
+        }
+    }
+    public StringBuilder displayCharacterStatistics(){
+        Map<String, BaseItem> itemsCurrentlyEquipped = getItems();
+        String characterPrimaryStat = getClassPrimaryStat();
+        int dexterity = getTotalStats().get(0);     // Characters total dexterity
+        int strength = getTotalStats().get(1);      // Characters total strength
+        int intelligence = getTotalStats().get(2);  // Characters total intelligence
+        double weaponDps = 1;                       // Weapon dps, if no weapon then 1
+        double characterDps;
+        // Loop through armors equipped and add their stats to previously declared dexterity,strength,intelligence
+        for (String item : itemsCurrentlyEquipped.keySet()){
+            if (itemsCurrentlyEquipped.get(item).getSlot() != "Weapon"){
+                Armor armor = (Armor) itemsCurrentlyEquipped.get(item);
+                dexterity += armor.getDexterity();
+                strength += armor.getStrength();
+                intelligence += armor.getIntelligence();
+            } else if (itemsCurrentlyEquipped.get(item).getSlot() == "Weapon") {
+                Weapon weapon = (Weapon) itemsCurrentlyEquipped.get(item);
+                weaponDps = weapon.getDps();
+            }
+        }
+        // Calculate character dps from primary stat and weapon dps
+        if (characterPrimaryStat == "Dexterity"){
+            characterDps = weaponDps * (1+dexterity/100.0);
+        } else if (characterPrimaryStat == "Strength") {
+            characterDps = weaponDps * (1+strength/100.0);
+        }else {
+            characterDps = weaponDps * (1+intelligence/100.0);
+        }
+        // Create a sheet containing characters statistics with string builder
+        StringBuilder builder = new StringBuilder();
+        builder.append("[----- STATISTICS -----]\n");
+        builder.append("Name:           ");
+        builder.append(getName()+"\n");
+        builder.append("Level:          ");
+        builder.append(getLevel()+"\n");
+        builder.append("Dexterity:      ");
+        builder.append(dexterity+"\n");
+        builder.append("Strength:       ");
+        builder.append(strength+"\n");
+        builder.append("Intelligence:   ");
+        builder.append(intelligence+"\n");
+        builder.append("DPS:            ");
+        builder.append(characterDps+"\n");
+        return builder;
     }
 }
