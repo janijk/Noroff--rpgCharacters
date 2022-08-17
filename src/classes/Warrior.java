@@ -10,8 +10,8 @@ public class Warrior extends Character {
         super(
                 name,
                 "Strength",                //Primary damage dealing stat
-                new ArrayList<>(Arrays.asList("Mail", "Plate")),    //Usable armor
-                new ArrayList<>(Arrays.asList("Axe","Hammer", "Sword")), //Usable weapons
+                new ArrayList<>(Arrays.asList("Mail", "Plate")),    //Armor type this class can use
+                new ArrayList<>(Arrays.asList("Axe","Hammer", "Sword")), //Weapons this class can use
                 new ArrayList<>(Arrays.asList(2,5,1)),  //Base stats (Dexterity,Strength,Intelligence)
                 new ArrayList<>(Arrays.asList(2,3,1))   //Stats increase per level (Dexterity,Strength,Intelligence)
         );

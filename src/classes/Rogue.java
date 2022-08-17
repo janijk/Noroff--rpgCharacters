@@ -10,8 +10,8 @@ public class Rogue extends Character {
         super(
                 name,
                 "Dexterity",                //Primary damage dealing stat
-                new ArrayList<>(Arrays.asList("Leather", "Mail")),    //Usable armor
-                new ArrayList<>(Arrays.asList("Dagger", "Sword")), //Usable weapons
+                new ArrayList<>(Arrays.asList("Leather", "Mail")),    //Armor type this class can use
+                new ArrayList<>(Arrays.asList("Dagger", "Sword")), //Weapons this class can use
                 new ArrayList<>(Arrays.asList(6,2,1)),  //Base stats (Dexterity,Strength,Intelligence)
                 new ArrayList<>(Arrays.asList(4,1,1))   //Stats increase per level (Dexterity,Strength,Intelligence)
         );

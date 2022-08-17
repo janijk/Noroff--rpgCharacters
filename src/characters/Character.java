@@ -55,7 +55,7 @@ public abstract class Character implements PrimaryStat {
         return level;
     }
 
-    public String getClassPrimaryStat() {return classPrimaryStat;   }
+    public String getClassPrimaryStat() {return classPrimaryStat;}
 
     public static Map<String, BaseItem> getItems() {
         return items;
@@ -63,8 +63,8 @@ public abstract class Character implements PrimaryStat {
     public static BaseItem getItems(String key) {
         return items.get(key);
     }
-    // Equip a item for your character, is called through equipArmor and equipWeapon
-    // Key is slot item goes into and item is weapon or armor
+    // Equip a item for your character. Is called through equipArmor() and equipWeapon()
+    // Key is items slot and value is item
     private static void setItems(String key, BaseItem item) {
         Character.items.put(key,item);
     }
@@ -117,7 +117,6 @@ public abstract class Character implements PrimaryStat {
             } else {
                 setItems(key, armr);
             }
-
     }
     // Check if level and weapon type requirements are met when equipping a weapon
     // Key is weapons slot and value is weapon
@@ -135,9 +134,7 @@ public abstract class Character implements PrimaryStat {
             } else {
                 setItems(key, weapon);
             }
-
     }
-
     // Calculate character damage by calculating sum of primary stats,
     // combined with armor stats and multiplied with weapon dps
     @Override

@@ -10,8 +10,8 @@ public class Mage extends Character{
         super(
                 name,
                 "Intelligence",                //Primary damage dealing stat
-                new ArrayList<>(Arrays.asList("Cloth")),    //Usable armor
-                new ArrayList<>(Arrays.asList("Staff", "Wand")), //Usable weapons
+                new ArrayList<>(Arrays.asList("Cloth")),    //Armor type this class can use
+                new ArrayList<>(Arrays.asList("Staff", "Wand")), //Weapons this class can use
                 new ArrayList<>(Arrays.asList(1,1,8)),  //Base stats (Dexterity,Strength,Intelligence)
                 new ArrayList<>(Arrays.asList(1,1,5))   //Stats increase per level (Dexterity,Strength,Intelligence)
         );

@@ -10,8 +10,8 @@ public class Ranger extends Character {
         super(
                 name,
                 "Dexterity",                //Primary damage dealing stat
-                new ArrayList<>(Arrays.asList("Leather", "Mail")),    //Usable armor
-                new ArrayList<>(Arrays.asList("Bow")), //Usable weapons
+                new ArrayList<>(Arrays.asList("Leather", "Mail")),    //Armor type this class can use
+                new ArrayList<>(Arrays.asList("Bow")), //Weapons this class can use
                 new ArrayList<>(Arrays.asList(7,1,1)),  //Base stats (Dexterity,Strength,Intelligence)
                 new ArrayList<>(Arrays.asList(5,1,1))   //Stats increase per level (Dexterity,Strength,Intelligence)
         );

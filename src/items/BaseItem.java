@@ -7,7 +7,7 @@ public abstract class BaseItem {
     public BaseItem(String name, int lvlReq, String slot) {
         this.name = name;       //Name of the item
         this.lvlReq = lvlReq;   //Level required to equip
-        this.slot = slot;       //Which slot item goes into
+        this.slot = slot;       //Which slot item goes into e.g., Weapon, Chest, Legs, Head
     }
     public String getName() {
         return name;

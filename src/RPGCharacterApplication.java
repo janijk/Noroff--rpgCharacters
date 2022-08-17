@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class RPGCharacterApplication {
     /*
     Create character:       Character character = new Mage("Name");
-    Create Weapon:          Weapon stick = new Weapon("Atiesh",3,"Weapon",50,2.2,"Staff");
-    Create Armor:           Armor helm = new Armor("Bandana", 2,"Head","Cloth",2,2,2);
+    Create Weapon:          Weapon stick = new Weapon("Atiesh",1,"Weapon",1,1.1,"Staff");
+    Create Armor:           Armor helm = new Armor("Bandana", 1,"Head","Cloth",1,1,1);
     Equip Armor:            character.equipArmor(String.valueOf(helm.getSlot()),helm);
     Equip Weapon:           character.equipWeapon(String.valueOf(stick.getSlot()),stick);
     Add one level:          character.plusOneLevel();
@@ -24,7 +24,7 @@ public class RPGCharacterApplication {
     public static Character characterCreation(){
         Scanner scanner = new Scanner(System.in);
         System.out.println(
-                "Character creation:\nChoose class for your character:\n1.Mage, 2.Rogue, 3.Ranger, 4.Warrior,5.Exit");
+                "Character creation:\nChoose class for your character:\n1.Mage, 2.Rogue, 3.Ranger, 4.Warrior, 5.Exit");
         int choice = scanner.nextInt();
         if (choice==5){
             return null;
@@ -72,7 +72,7 @@ public class RPGCharacterApplication {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Name your weapon:");
         name = scanner.nextLine();
-        System.out.println("Type:\nAxe, Hammer, Sword, Staff, Wand, Bow, Dagger");
+        System.out.println("Choose type:\nAxe, Hammer, Sword, Staff, Wand, Bow, Dagger");
         type = scanner.nextLine();
         System.out.println("Level requirement:");
         lvlReq = scanner.nextInt();
@@ -89,9 +89,9 @@ public class RPGCharacterApplication {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Name your armor:");
         name = scanner.nextLine();
-        System.out.println("Slot:\nHead, Chest, Legs");
+        System.out.println("Choose slot:\nHead, Chest, Legs");
         slot = scanner.nextLine();
-        System.out.println("Type:\nCloth, Leather, Mail, Plate");
+        System.out.println("Choose type:\nCloth, Leather, Mail, Plate");
         type = scanner.nextLine();
         System.out.println("Level requirement:");
         lvlReq = scanner.nextInt();
@@ -105,7 +105,7 @@ public class RPGCharacterApplication {
     }
     public static void main(String[] args) throws InvalidWeaponException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Hello");
+        System.out.println("<<<<Hello Gamer !>>>>");
         Character character = characterCreation();
         boolean goOn = true;
         do {
