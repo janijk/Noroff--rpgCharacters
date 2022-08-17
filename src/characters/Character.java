@@ -63,7 +63,9 @@ public abstract class Character implements PrimaryStat {
     public static BaseItem getItems(String key) {
         return items.get(key);
     }
-    public static void setItems(String key, BaseItem item) {
+    // Equip a item for your character, is called through equipArmor and equipWeapon
+    // Key is slot item goes into and item is weapon or armor
+    private static void setItems(String key, BaseItem item) {
         Character.items.put(key,item);
     }
     @Override
@@ -80,15 +82,15 @@ public abstract class Character implements PrimaryStat {
     }
     @Override
     public int getLvlDexterity() {  //Get total Dexterity at current level
-        return getLevelStats().get(0) * getLevel();
+        return getLevelStats().get(0) * (getLevel()-1);
     }
     @Override
     public int getLvlStrength() {   //Get total Strength at current level
-        return getLevelStats().get(1) * getLevel();
+        return getLevelStats().get(1) * (getLevel()-1);
     }
     @Override
     public int getLvlIntelligence() {   //Get total Intelligence at current level
-        return getLevelStats().get(2) * getLevel();
+        return getLevelStats().get(2) * (getLevel()-1);
     }
     //Get total (base + current level) stats for a character, return as a list [dexterity, strength, intelligence]
     @Override
@@ -100,28 +102,40 @@ public abstract class Character implements PrimaryStat {
         return total;
     }
     // Check if armor type and level requirements are met when equipping a armor
+    // Key is armor slot and value is armor
     public void equipArmor(String key, Armor armr) throws InvalidArmorException {
-        for (int i = 0; i < getUsableArmor().size(); i++) {
-            if(!armr.getArmorType().equals(getUsableArmor().get(i)) && i<getUsableArmor().size()-1){
-                throw new InvalidArmorException("You cant use this armor");
+        boolean cantUse = true;
+        for (String str: getUsableArmor()){
+            if (str.equals(armr.getArmorType())){
+                cantUse = false;
+            }
+        }
+            if(cantUse){
+                throw new InvalidArmorException("You cant use " + armr.getArmorType()+" armor");
             } else if (armr.getLvlReq()>getLevel()) {
                 throw new InvalidArmorException("You cant use armor above your current level");
             } else {
                 setItems(key, armr);
             }
-        }
+
     }
     // Check if level and weapon type requirements are met when equipping a weapon
+    // Key is weapons slot and value is weapon
     public void equipWeapon(String key, Weapon weapon) throws InvalidWeaponException {
-        for (int i = 0; i < getUsableWeapon().size(); i++){
-            if(!weapon.getWeaponType().equals(getUsableWeapon().get(i)) && i<getUsableWeapon().size()-1){
-                throw new InvalidWeaponException("You cant use this weapon");
+            boolean cantUse = true;
+            for (String str: getUsableWeapon()){
+                if (str.equals(weapon.getWeaponType())){
+                    cantUse = false;
+                }
+            }
+            if(cantUse){
+                throw new InvalidWeaponException("You cant use "+weapon.getWeaponType()+"s");
             } else if (weapon.getLvlReq()>getLevel()) {
                 throw new InvalidWeaponException("You cant use weapon above your current level");
             } else {
                 setItems(key, weapon);
             }
-        }
+
     }
 
     // Calculate character damage by calculating sum of primary stats,
@@ -198,6 +212,7 @@ public abstract class Character implements PrimaryStat {
         builder.append(intelligence+"\n");
         builder.append("DPS:            ");
         builder.append(characterDps+"\n");
+        builder.append("[----------------------]\n");
         return builder;
     }
 }

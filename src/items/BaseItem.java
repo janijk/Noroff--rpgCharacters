@@ -1,7 +1,4 @@
 package items;
-
-import characters.PrimaryStat;
-
 public abstract class BaseItem {
     private String name;
     private int lvlReq;
